@@ -1,10 +1,10 @@
 import flet as ft
 
-def home_page(page: ft.Page):
+def settings_page(page: ft.Page):
     return ft.Container(
         content=ft.Column(
             [
-                ft.Text("Home Page", size=20, font_family="Inter-ExtraBold"),
+                ft.Text("Settings Page", size=20, font_family="Inter-ExtraBold"),
             ], 
             scroll=ft.ScrollMode.AUTO, 
             expand=True

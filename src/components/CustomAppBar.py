@@ -6,9 +6,9 @@ class CustomAppBar(ft.AppBar):
         super().__init__()
         self.title = ft.Text(
             title, 
-            color="#667085", 
-            size=18,    
-            # font_family="InterRegular"  # Menggunakan Google Fonts Inter
+            color=ft.Colors.BLACK, 
+            size=16,    
+            font_family="Inter-ExtraBold"  # Menggunakan Google Fonts Inter
         )
         self.bgcolor = bgcolor
         self.center_title = True

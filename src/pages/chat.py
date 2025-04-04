@@ -5,7 +5,7 @@ from components.CustomAppBar import CustomAppBar
 from components.MyButton import MyButton
 
 
-def chat_page(page: ft.Page):
+def chat_page(page: ft.Page, id):
     page.title = "Chat"
     page.bgcolor = "#F6F6F7"
 
@@ -51,11 +51,13 @@ def chat_page(page: ft.Page):
         auto_scroll=True  # Scroll otomatis ke bawah saat ada pesan baru
     )
 
+    container = ft.Container(chat_container, expand=True)
+
     return ft.View(
-        route="/chat",
+        route=f"/chat/{id}",
         controls=[
             CustomAppBar(title="Chat"),
-            ft.Container(chat_container, expand=True),
+            ft.SafeArea(container)
         ],
         padding=0
     )

@@ -1,43 +1,42 @@
 import flet as ft
 from flet import TemplateRoute
-# from repath import TemplateRoute
-from pages.home import home_page
-from pages.store import store_page
+from pages.product import product_page
 from pages.chat import chat_page
 
-def route_change(page: ft.Page, stack=True):
-    """Mengatur navigasi dengan opsi stack (tumpukan halaman)"""
-    if not stack:
-        page.views.clear()  # ✅ c
+def route_change(page: ft.Page, content):
+    print(f"Route berubah: {page.route}")
 
-    # ✅ Buat routing dinamis
-    troute = TemplateRoute(page.route)
+    troute = TemplateRoute(page.route)  # ✅ Gunakan TemplateRoute
 
-    if troute.match("/"):
-        page.views.clear() # Hapus semua halaman sebelumnya jika tidak pakai stack 
-        page.views.append(home_page(page))
-    elif troute.match("/store"):
-        page.views.append(store_page(page))
+    if troute.match("/product/:id"):
+        product_id = troute.id  # ✅ Ambil ID dari URL
+        print('product_id', product_id)
+        page.views.append(product_page(page, product_id))
     elif troute.match("/chat/:id"):
-        page.views.append(chat_page(page))
-        print("Chat ID:", troute.id)
+        chat_id = troute.id  # ✅ Ambil ID dari URL
+        print('chat_id', chat_id)
+        page.views.append(chat_page(page, chat_id))
     else:
-        print("Unknown route")
-
-    # # ✅ Tambahkan halaman lain sesuai route
-    # if page.route == "/":
-    #     page.views.clear()
-    #     page.views.append(home_page(page))
-    # elif page.route == "/store":
-    #     page.views.append(store_page(page))
-    # elif page.route == "/chat":
-    #     page.views.append(chat_page(page))
+        # ✅ Bersihkan tampilan jika kembali ke menu utama
+        page.views.clear()
+        page.views.append(
+            ft.View("/", [content, page.navigation_bar], padding=0)
+        )
 
     page.update()
-    
 
-def view_pop(page: ft.Page):
+def view_pop(page: ft.Page, content):
     """Menghapus halaman terakhir jika ada lebih dari satu"""
     if len(page.views) > 1:
         page.views.pop()
-        page.go(page.views[-1].route)  # ✅ Navigasi ke halaman sebelumnya
+        prev_route = page.views[-1].route if page.views else "/"
+        print(f"Kembali ke: {prev_route}")
+
+        if prev_route != page.route:
+            page.go(prev_route)
+
+    # ✅ Bersihkan layout sebelum menambahkan ulang elemen
+    page.views.clear()
+    print('kedua')
+    page.views.append(ft.View("/", [content, page.navigation_bar], padding=0))
+    page.update()
