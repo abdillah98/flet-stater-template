@@ -1,81 +1,60 @@
-# FirstFletApp app
+# Flet Project Setup Guide
 
-## Run the app
-
-### uv
-
-Run as a desktop app:
-
-```
-uv run flet run
+## 📥 Clone Repository
+```sh
+git clone https://github.com/your-repo/flet-project.git
+cd flet-project
 ```
 
-Run as a web app:
-
+## 🛠 Install Poetry
+Jika belum menginstal Poetry, silakan install terlebih dahulu:
+```sh
+curl -sSL https://install.python-poetry.org | python3 -
 ```
-uv run flet run --web
+
+Tambahkan Poetry ke PATH:
+```sh
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
-### Poetry
-
-Install dependencies from `pyproject.toml`:
-
+## 🏗 Aktifkan Virtual Environment
+```sh
+poetry env use python3
+poetry shell
 ```
+
+## 📦 Install Dependencies
+```sh
 poetry install
 ```
 
-Run as a desktop app:
-
+## 🚀 Jalankan Aplikasi di Desktop (Port 8081)
+```sh
+poetry run flet run -d -r main.py --port 8081
 ```
-poetry run flet run
-```
-
-Run as a web app:
-
-```
-poetry run flet run --web
+Atau langsung dengan:
+```sh
+poetry run python main.py
 ```
 
-For more details on running the app, refer to the [Getting Started Guide](https://flet.dev/docs/getting-started/).
+## 📱 Jalankan di Flet App Android
+1. **Unduh dan Instal** aplikasi Flet di Android melalui [Google Play Store](https://play.google.com/store/apps/details?id=app.flet)
+2. **Jalankan Server Flet di Desktop**
+   ```sh
+   poetry run flet run -r main.py --port 8081
+   ```
+3. **Masukkan IP dan Port di Flet App Android**
+   - Buka aplikasi Flet di Android
+   - Masukkan `http://<IP-KOMPUTER>:8081` pada kolom URL
+   - Tekan **Connect**
 
-## Build the app
+> 💡 **Catatan**: Pastikan perangkat Android dan komputer berada dalam satu jaringan Wi-Fi.
 
-### Android
+## 🛠 Troubleshooting
+- Jika Poetry tidak dikenali sebagai command, coba restart terminal atau tambahkan ke PATH.
+- Pastikan firewall tidak memblokir port 8081 saat mengakses dari Android.
+- Cek alamat IP komputer dengan `ipconfig` (Windows) atau `ifconfig` (Mac/Linux).
 
-```
-flet build apk -v
-```
+---
+✨ **Happy Coding with Flet!** ✨
 
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://flet.dev/docs/publish/android/).
-
-### iOS
-
-```
-flet build ipa -v
-```
-
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://flet.dev/docs/publish/ios/).
-
-### macOS
-
-```
-flet build macos -v
-```
-
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://flet.dev/docs/publish/macos/).
-
-### Linux
-
-```
-flet build linux -v
-```
-
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://flet.dev/docs/publish/linux/).
-
-### Windows
-
-```
-flet build windows -v
-```
-
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://flet.dev/docs/publish/windows/).
