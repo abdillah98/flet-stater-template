@@ -49,6 +49,24 @@ def {name}View(page: ft.Page, id):
     )
 '''
 
+# === COMPONENT TEMPLATES ===
+CLASS_COMPONENT_TEMPLATE = '''import flet as ft
+
+class {name}(ft.Text):
+    def __init__(self, text: str):
+        super().__init__()
+        self.text = text
+'''
+
+FUNCTION_COMPONENT_TEMPLATE = '''import flet as ft
+
+def {name}(text: str):
+    return ft.Text(
+        text=text
+    )
+'''
+
+# === VIEW GENERATOR ===
 def create_view(view_name, use_stack=False):
     os.makedirs("src/views", exist_ok=True)
 
@@ -63,17 +81,36 @@ def create_view(view_name, use_stack=False):
 
     print(f"✅ View '{filename}' berhasil dibuat.")
 
-# Command CLI handler
+
+# === COMPONENT GENERATOR ===
+def create_component(name, use_function=False):
+    os.makedirs("src/components", exist_ok=True)
+    filename = f"src/components/{name}.py"
+    template = FUNCTION_COMPONENT_TEMPLATE if use_function else CLASS_COMPONENT_TEMPLATE
+
+    with open(filename, "w") as f:
+        f.write(template.format(name=name))
+
+    tipe = "Function" if use_function else "Class"
+    print(f"✅ {tipe} Component '{filename}' berhasil dibuat.")
+
+
+
+# === COMMAND PARSER ===
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python fletcli.py make:view ViewName [--stack]")
+        print("Usage:")
+        print("  python fletcli.py make:view ViewName [--stack]")
+        print("  python fletcli.py make:component ComponentName [--function]")
         sys.exit()
 
     command = sys.argv[1]
-    view_name = sys.argv[2]
-    use_stack = "--stack" in sys.argv
+    name = sys.argv[2]
+    is_flagged = "--stack" in sys.argv or "--function" in sys.argv
 
     if command == "make:view":
-        create_view(view_name, use_stack)
+        create_view(name, use_stack="--stack" in sys.argv)
+    elif command == "make:component":
+        create_component(name, use_function="--function" in sys.argv)
     else:
         print("🚫 Unknown command.")

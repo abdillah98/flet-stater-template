@@ -2,7 +2,7 @@ import flet as ft
 
 # views
 from views.Chat import ChatView
-# from views.Contact import ContactView
+from views.Contact import ContactView
 from views.Home import HomeView
 from views.Product import ProductView
 from views.Profile import ProfileView
@@ -47,7 +47,7 @@ def main(page: ft.Page):
     routes = [
         {"path": "/product/:id", "view": lambda page, route: ProductView(page, route.id)},
         {"path": "/chat/:id", "view": lambda page, route: ChatView(page, route.id)},
-        # {"path": "/contact/:id", "view": lambda page, route: ContactView(page, route.id)},
+        {"path": "/contact/:id", "view": lambda page, route: ContactView(page, route.id)},
     ]
 
     # 🎯 Daftar konfigurasi icon dan label

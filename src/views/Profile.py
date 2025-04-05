@@ -7,7 +7,7 @@ def ProfileView(page: ft.Page):
         content=ft.Column(
             [
                 ft.Text("Profile Page", size=20, font_family="Inter-ExtraBold"),
-                MyButton("Go to Product", expand=True, on_click= lambda _: page.go('/product/123')),
+                MyButton("Go to Contact", expand=True, on_click= lambda _: page.go('/contact/123')),
             ], 
             scroll=ft.ScrollMode.AUTO, 
             expand=True
