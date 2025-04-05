@@ -1,6 +1,6 @@
 import flet as ft
 
-def home_page(page: ft.Page):
+def HomeView(page: ft.Page):
     return ft.Container(
         content=ft.Column(
             [
@@ -13,6 +13,4 @@ def home_page(page: ft.Page):
         expand=True,
         padding=0,
         alignment=ft.alignment.center,  # ✅ Rapi di tengah
-        # width=float("inf"),  # ✅ Lebar penuh
-        # bgcolor=ft.colors.YELLOW
     )

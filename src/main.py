@@ -1,12 +1,13 @@
 import flet as ft
 
-# Pages
-from pages.chat import chat_page
-from pages.home import home_page
-from pages.product import product_page
-from pages.profile import profile_page
-from pages.settings import settings_page
-from pages.store import store_page
+# views
+from views.Chat import ChatView
+# from views.Contact import ContactView
+from views.Home import HomeView
+from views.Product import ProductView
+from views.Profile import ProfileView
+from views.Settings import SettingsView
+from views.Store import StoreView
 
 # Route 
 from routes import route_change
@@ -17,9 +18,12 @@ from components.NavigationBar import create_navigation_bar
 
 
 def main(page: ft.Page):
+    # Inisialisasi Custom Font dan Icon Webfont 
     page.fonts = {
+        # Custom font 
         "Inter-Regular": "/fonts/Inter/used/Inter-Regular.ttf",
         "Inter-ExtraBold": "/fonts/Inter/used/Inter-ExtraBold.ttf",
+        # Icon webfont
         "fa-solid": "/fonts/Fontawesome/webfonts/fa-solid-900.ttf",
         "fa-regular": "/fonts/Fontawesome/webfonts/fa-regular-400.ttf",
         "fa-brands": "/fonts/Fontawesome/webfonts/fa-brands-400.ttf",
@@ -31,15 +35,36 @@ def main(page: ft.Page):
     page.padding = 0
     
     # ✅ set halaman
-    pages = [
-        home_page(page),
-        store_page(page),
-        profile_page(page),
-        settings_page(page),
+    views = [
+        HomeView(page),
+        StoreView(page),
+        ProfileView(page),
+        SettingsView(page),
+        # ContactView(page),
     ]
 
+    # Daftar route dan handler view-nya
+    routes = [
+        {"path": "/product/:id", "view": lambda page, route: ProductView(page, route.id)},
+        {"path": "/chat/:id", "view": lambda page, route: ChatView(page, route.id)},
+        # {"path": "/contact/:id", "view": lambda page, route: ContactView(page, route.id)},
+    ]
+
+    # 🎯 Daftar konfigurasi icon dan label
+    naviagation_bar_items = [
+        {"icon": "\uf015", "label": "Home"},
+        {"icon": "\uf07a", "label": "Store"},
+        {"icon": "\uf007", "label": "Profile"},
+        {"icon": "\uf013", "label": "Settings"},
+        # {"icon": "\uf2b9", "label": "Contacts"},
+    ]
+
+    # Tambahkan navigation bar ke layout
+    page.navigation_bar = create_navigation_bar(page, views, items=naviagation_bar_items)
+
+    # Tambahkan ke layout
     column = ft.Column(
-        controls=pages,  # 🔥 Looping di sini
+        controls=views,  # 🔥 Looping di sini
         expand=True
     )
 
@@ -53,17 +78,12 @@ def main(page: ft.Page):
         expand=True,
     )
 
-
-    # Tambahkan navigation bar ke layout
-    page.navigation_bar = create_navigation_bar(page, pages)
-
-    # Tambahkan ke layout
     page.views.clear()
     page.views.append(ft.View("/", [safe_area, page.navigation_bar], padding=0))
     page.update()
 
     # ✅ Set event listener untuk perubahan rute
-    page.on_route_change = lambda _: route_change(page, content=safe_area)
+    page.on_route_change = lambda _: route_change(page, content=safe_area, routes=routes)
     page.on_view_pop = lambda _: view_pop(page, content=safe_area)
 
     # Update pembaruan

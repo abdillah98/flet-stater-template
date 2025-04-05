@@ -5,7 +5,7 @@ from components.CustomAppBar import CustomAppBar
 from components.MyButton import MyButton
 
 
-def chat_page(page: ft.Page, id):
+def ChatView(page: ft.Page, id):
     page.title = "Chat"
     page.bgcolor = "#F6F6F7"
 

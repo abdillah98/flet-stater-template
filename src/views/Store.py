@@ -2,12 +2,12 @@ import flet as ft
 
 from components.MyButton import MyButton
 
-def profile_page(page: ft.Page):
+def StoreView(page: ft.Page):
     return ft.Container(
         content=ft.Column(
             [
-                ft.Text("Profile Page", size=20, font_family="Inter-ExtraBold"),
-                MyButton("Go to Product", expand=True, on_click= lambda _: page.go('/product/123')),
+                ft.Text("Home Page", size=20, font_family="Inter-ExtraBold"),
+                MyButton("Visit Product", on_click=lambda _: page.go("/product/123")),
             ], 
             scroll=ft.ScrollMode.AUTO, 
             expand=True
@@ -16,6 +16,4 @@ def profile_page(page: ft.Page):
         expand=True,
         padding=0,
         alignment=ft.alignment.center,
-        # width=float("inf"),
-        # bgcolor=ft.colors.BLUE
     )

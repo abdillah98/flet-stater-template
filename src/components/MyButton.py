@@ -1,7 +1,7 @@
 import flet as ft
 
 class MyButton(ft.ElevatedButton):
-    def __init__(self, text: str, on_click=None, expand=False):
+    def __init__(self, text: str, on_click=None, expand=False): # paramters (props)
         super().__init__()
         self.text = text
         self.on_click = on_click
@@ -11,8 +11,5 @@ class MyButton(ft.ElevatedButton):
             bgcolor=ft.colors.BLUE,  # ✅ Warna tombol
             color=ft.colors.WHITE,  # ✅ Warna teks
             padding=ft.padding.symmetric(vertical=10, horizontal=20),  # ✅ Padding tombol
-        )
-        self.text_style = ft.TextStyle(
-            # font_family="InterRegular",  # ✅ Font kustom (pastikan sudah di-load)
-            size=12,
+            text_style = ft.TextStyle(size=14)
         )

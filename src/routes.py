@@ -1,23 +1,23 @@
 import flet as ft
 from flet import TemplateRoute
-from pages.product import product_page
-from pages.chat import chat_page
+from views.Product import ProductView
+from views.Chat import ChatView
 
-def route_change(page: ft.Page, content):
+# Routing dinamis dengan stack route 
+def route_change(page: ft.Page, content, routes):
     print(f"Route berubah: {page.route}")
+    matched = False
 
-    troute = TemplateRoute(page.route)  # ✅ Gunakan TemplateRoute
+    for route in routes:
+        troute = TemplateRoute(page.route)
+        if troute.match(route["path"]):
+            print(f"Matched: {route['path']} with params: {troute.__dict__}")
+            page.views.append(route["view"](page, troute))
+            matched = True
+            break
 
-    if troute.match("/product/:id"):
-        product_id = troute.id  # ✅ Ambil ID dari URL
-        print('product_id', product_id)
-        page.views.append(product_page(page, product_id))
-    elif troute.match("/chat/:id"):
-        chat_id = troute.id  # ✅ Ambil ID dari URL
-        print('chat_id', chat_id)
-        page.views.append(chat_page(page, chat_id))
-    else:
-        # ✅ Bersihkan tampilan jika kembali ke menu utama
+    if not matched:
+        # Fallback untuk route tidak dikenal
         page.views.clear()
         page.views.append(
             ft.View("/", [content, page.navigation_bar], padding=0)
@@ -25,6 +25,8 @@ def route_change(page: ft.Page, content):
 
     page.update()
 
+
+# Fungsi untuk menangani route Go Back 
 def view_pop(page: ft.Page, content):
     """Menghapus halaman terakhir jika ada lebih dari satu"""
     if len(page.views) > 1:
