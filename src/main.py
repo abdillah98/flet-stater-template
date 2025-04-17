@@ -1,7 +1,7 @@
 import flet as ft
 
 # views
-from configs.pages import configure_page
+from configs.themes import configure_themes
 
 # Route 
 from routes import route_change
@@ -14,12 +14,11 @@ from components.NavigationBar import create_navigation_bar
 from configs.views import get_views
 from configs.routes import routes
 from configs.navigation_bar import navigation_bar_items
-from configs.fonts import fonts
 
 
 def main(page: ft.Page):
-    # Inisialisasi Custom Font dan Icon Webfont 
-    configure_page(page)
+    # Config theme options 
+    configure_themes(page)
     
     # ✅ Ambil views & items dari config
     views = get_views(page)
